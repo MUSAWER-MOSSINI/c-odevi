@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+#define ROWS 8
+#define COLS 10
+
+int main() {
+    // Örnek veri dosyasını oluştur
+    FILE *pF = fopen("puanlar.txt", "w");
+    if (pF == NULL) {
+        printf("Hata: Dosya oluşturulamadı!\n");
+        return 1;
+    }
+    fprintf(pF, "0 1 2 1 2 2 1 0 1 0\n"
+                "2 3 3 0 3 2 3 3 4 1\n"
+                "1 3 4 1 4 2 1 4 2 3\n"
+                "3 4 2 3 0 3 4 2 4 2\n"
+                "4 1 3 2 2 1 3 0 1 0\n"
+                "4 4 3 2 1 4 4 1 4 1\n"
+                "1 3 1 3 2 4 1 4 3 4\n"
+                "2 2 2 3 4 2 3 4 3 3\n");
+    fclose(pF);
+
+    // Kullanıcıdan dosya adlarını al
+    char input_file[50], output_file[50];
+    printf("Puanların tutulduğu dosyanın adını giriniz: ");
+    scanf("%49s", input_file);
+    printf("Sonuçlar hangi dosyaya kaydedilsin: ");
+    scanf("%49s", output_file);
+
+    // Puanları dosyadan okuma
+    int matris[ROWS][COLS];
+    FILE *input = fopen(input_file, "r");
+    if (input == NULL) {
+        printf("Hata: %s dosyası açılamadı!\n", input_file);
+        return 1;
+    }
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            fscanf(input, "%d", &matris[i][j]);
+        }
+    }
+    fclose(input);
+
+    // Ürün ve aile toplamlarını hesapla
+    int toplam_urun[ROWS] = {0}, toplam_aile[COLS] = {0};
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            toplam_urun[i] += matris[i][j];
+            toplam_aile[j] += matris[i][j];
+        }
+    }
+
+    // En çok beğenilen ürün ve en az beğenen aileyi bul
+    int max_begenilen_urun = 0, min_begenen_aile = 0;
+    for (int i = 1; i < ROWS; i++) {
+        if (toplam_urun[i] > toplam_urun[max_begenilen_urun]) {
+            max_begenilen_urun = i;
+        }
+    }
+    for (int j = 1; j < COLS; j++) {
+        if (toplam_aile[j] < toplam_aile[min_begenen_aile]) {
+            min_begenen_aile = j;
+        }
+    }
+
+    // Sonuçları dosyaya yazma
+    FILE *output = fopen(output_file, "w");
+    if (output == NULL) {
+        printf("Hata: %s dosyası oluşturulamadı!\n", output_file);
+        return 1;
+    }
+    fprintf(output, "En çok beğenilen ürün no: %d\n", max_begenilen_urun + 1);
+    fprintf(output, "En az beğenen aile no: %d\n", min_begenen_aile + 1);
+    fclose(output);
+
+    printf("%s dosyası başarıyla oluşturuldu.\n", output_file);
+    return 0;
+}
