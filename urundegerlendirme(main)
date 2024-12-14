@@ -1,15 +1,18 @@
 #include <stdio.h>
 
-#define ROWS 8
-#define COLS 10
+#define satir 8
+#define sutun 10
 
 int main() {
     // Örnek veri dosyasını oluştur
     FILE *pF = fopen("puanlar.txt", "w");
+    // eger yanlis giris yapilirsa Hata veriir
     if (pF == NULL) {
         printf("Hata: Dosya oluşturulamadı!\n");
         return 1;
     }
+    // puamar adindaki dosyada asagdaki degerleri kaydetmesiini istiyoruz.
+    //satir, urunleri ve sutun aileleri temsil eder.
     fprintf(pF, "0 1 2 1 2 2 1 0 1 0\n"
                 "2 3 3 0 3 2 3 3 4 1\n"
                 "1 3 4 1 4 2 1 4 2 3\n"
@@ -18,9 +21,9 @@ int main() {
                 "4 4 3 2 1 4 4 1 4 1\n"
                 "1 3 1 3 2 4 1 4 3 4\n"
                 "2 2 2 3 4 2 3 4 3 3\n");
-    fclose(pF);
+    fclose(pF);// dosyayla yapılan işlemleri tamamlar ve dosyayı kapatir
 
-    // Kullanıcıdan dosya adlarını al
+    // Kullanıcıdan dosya adlarını alir ve maximum 40 haff ve karakterden olusmali
     char input_file[50], output_file[50];
     printf("Puanların tutulduğu dosyanın adını giriniz: ");
     scanf("%49s", input_file);
@@ -28,51 +31,53 @@ int main() {
     scanf("%49s", output_file);
 
     // Puanları dosyadan okuma
-    int matris[ROWS][COLS];
-    FILE *input = fopen(input_file, "r");
-    if (input == NULL) {
+    int matris[satir][sutun];// r parametresi dosydan okuma islemini yapar
+    FILE *input = fopen(input_file, "r");// dosyayi acar ve okur
+    if (input == NULL) {// yanlis giris yapilirsa hata verir
         printf("Hata: %s dosyası açılamadı!\n", input_file);
         return 1;
     }
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
+    for (int i = 0; i < satir; i++) {
+        for (int j = 0; j < sutun; j++) {
             fscanf(input, "%d", &matris[i][j]);
         }
     }
     fclose(input);
 
     // Ürün ve aile toplamlarını hesapla
-    int toplam_urun[ROWS] = {0}, toplam_aile[COLS] = {0};
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
+    // ilk basta toplam utun ve toplam aile 0 olarak tanimlandi
+    int toplam_urun[satir] = {0}, toplam_aile[sutun] = {0};
+    for (int i = 0; i < satir; i++) {// her stirdaki elemana erisip onlari toplar
+        for (int j = 0; j < sutun; j++) {// her sutun elemanina erisip onlari toplar
             toplam_urun[i] += matris[i][j];
             toplam_aile[j] += matris[i][j];
         }
     }
 
-    // En çok beğenilen ürün ve en az beğenen aileyi bul
+    // En çok beğenilen ürün ve en az beğenen aileyi bulmasi icin donguye soktuk
     int max_begenilen_urun = 0, min_begenen_aile = 0;
-    for (int i = 1; i < ROWS; i++) {
+    for (int i = 1; i < satir; i++) {
         if (toplam_urun[i] > toplam_urun[max_begenilen_urun]) {
             max_begenilen_urun = i;
         }
     }
-    for (int j = 1; j < COLS; j++) {
+    for (int j = 1; j < sutun; j++) {
         if (toplam_aile[j] < toplam_aile[min_begenen_aile]) {
             min_begenen_aile = j;
         }
     }
 
     // Sonuçları dosyaya yazma
-    FILE *output = fopen(output_file, "w");
-    if (output == NULL) {
+    FILE *output = fopen(output_file, "w");// sonuc dosyasini acar ve yazma islemi yapar. W yazma islemi icin kullanilir
+    if (output == NULL) {// yanlis giris yapilirsa hata verir
         printf("Hata: %s dosyası oluşturulamadı!\n", output_file);
         return 1;
     }
+    //en cok begenilen urun ve en az begenen aileyi sonuc dosyasini yazar
     fprintf(output, "En çok beğenilen ürün no: %d\n", max_begenilen_urun + 1);
     fprintf(output, "En az beğenen aile no: %d\n", min_begenen_aile + 1);
     fclose(output);
 
     printf("%s dosyası başarıyla oluşturuldu.\n", output_file);
-    return 0;
+    return 0;
 }
