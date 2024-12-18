@@ -1,12 +1,13 @@
-
-// En cok begenilen urunu bulan fonksiyon
+/* En çok beğenilen ürünü bulan fonksiyon. 
+Ürünlerin toplam puanlarını alıyor ve en yüksek olanını buluyor.*/
 int enCokBegenilenUrun(int toplam_urun[]) {
+    // Başlangıçta en çok beğenilen ürünü sıfır olarak varsayıyoruz.
     int en_cok_begenilen_urun = 0;
+
+    // Her ürünü karşılaştırıyoruz. Eğer bir ürün daha fazla puan aldıysa, onu en çok beğenilen olarak güncelliyoruz.
     for (int i = 1; i < satir; i++) {
         if (toplam_urun[i] > toplam_urun[en_cok_begenilen_urun]) {
             en_cok_begenilen_urun = i;
-        } else {
-
         }
     }
     return en_cok_begenilen_urun;
