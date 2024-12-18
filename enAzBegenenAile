@@ -1,1 +1,12 @@
+// En az begenen aileyi bulan fonksiyon
+int enAzBegenenAile(int toplam_aile[]) {
+    int en_az_begenen_aile = 0;
+    for (int j = 1; j < sutun; j++) {
+        if (toplam_aile[j] < toplam_aile[en_az_begenen_aile]) {
+            en_az_begenen_aile = j;
+        } else {
 
+        }
+    }
+    return en_az_begenen_aile;
+}
