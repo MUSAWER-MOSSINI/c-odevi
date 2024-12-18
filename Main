@@ -5,35 +5,6 @@
 #define satir 8
 #define sutun 10
 
-/* En çok beğenilen ürünü bulan fonksiyon. 
-Ürünlerin toplam puanlarını alıyor ve en yüksek olanını buluyor.*/
-int enCokBegenilenUrun(int toplam_urun[]) {
-    // Başlangıçta en çok beğenilen ürünü sıfır olarak varsayıyoruz.
-    int en_cok_begenilen_urun = 0;
-
-    // Her ürünü karşılaştırıyoruz. Eğer bir ürün daha fazla puan aldıysa, onu en çok beğenilen olarak güncelliyoruz.
-    for (int i = 1; i < satir; i++) {
-        if (toplam_urun[i] > toplam_urun[en_cok_begenilen_urun]) {
-            en_cok_begenilen_urun = i;
-        }
-    }
-    return en_cok_begenilen_urun;
-}
-
-/* En az beğenen aileyi bulan fonksiyon.
- Ailelerin toplam puanlarını alıyor ve en düşük puanı bulan aileyi döndürüyor.*/
-int enAzBegenenAile(int toplam_aile[]) {
-    // Başlangıçta en az beğenen aileyi sıfır olarak varsayıyoruz.
-    int en_az_begenen_aile = 0;
-
-    // Her aileyi kontrol ediyoruz. Eğer bir aile daha az puan vermişse, onu en az beğenen olarak güncelliyoruz.
-    for (int j = 1; j < sutun; j++) {
-        if (toplam_aile[j] < toplam_aile[en_az_begenen_aile]) {
-            en_az_begenen_aile = j;
-        }
-    }
-    return en_az_begenen_aile;
-}
 
 int main() {
     // Örnek veri dosyasını oluşturuyoruz. Bu dosya, "puanlar.txt" adıyla yazılıyor.
