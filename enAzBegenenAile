@@ -1,11 +1,13 @@
-// En az begenen aileyi bulan fonksiyon
+/* En az beğenen aileyi bulan fonksiyon.
+ Ailelerin toplam puanlarını alıyor ve en düşük puanı bulan aileyi döndürüyor.*/
 int enAzBegenenAile(int toplam_aile[]) {
+    // Başlangıçta en az beğenen aileyi sıfır olarak varsayıyoruz.
     int en_az_begenen_aile = 0;
+
+    // Her aileyi kontrol ediyoruz. Eğer bir aile daha az puan vermişse, onu en az beğenen olarak güncelliyoruz.
     for (int j = 1; j < sutun; j++) {
         if (toplam_aile[j] < toplam_aile[en_az_begenen_aile]) {
             en_az_begenen_aile = j;
-        } else {
-
         }
     }
     return en_az_begenen_aile;
